@@ -37,24 +37,27 @@
     
     [self configView];
     
+    [self configVideo];
+    
     // Do any additional setup after loading the view.
 }
 
 - (void)configView {
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
-    self.ncnnView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 80, width/4, height/4)];
-    [self.view addSubview:self.ncnnView];
     
     self.videoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     [self.view addSubview:self.videoView];
+    
+    self.ncnnView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 80, width/4, height/4)];
+    [self.view addSubview:self.ncnnView];
 }
 
 - (void)configVideo {
     self.captureSession = [[AVCaptureSession alloc] init];
     self.captureSession.sessionPreset = AVCaptureSessionPreset640x480;
-    
-    self.captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+                                        
+    self.captureDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront ];
     
     [self.captureSession beginConfiguration];
     
@@ -62,16 +65,10 @@
     self.captureInput = [AVCaptureDeviceInput deviceInputWithDevice:self.captureDevice error:&error];
     [self.captureSession addInput:self.captureInput];
     
-    self.imageOutput = [[AVCaptureStillImageOutput alloc] init];
-    // 这是输出流的设置参数AVVideoCodecJPEG参数表示以JPEG的图片格式输出图片
-    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [self.imageOutput setOutputSettings:outputSettings];
-    [self.captureSession addOutput:self.imageOutput];
-    
     self.videoOutput = [[AVCaptureVideoDataOutput alloc] init];
     self.videoOutput.alwaysDiscardsLateVideoFrames = YES;
     self.videoOutput.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-    [self.captureSession addOutput:_videoOutput];
+    [self.captureSession addOutput:self.videoOutput];
 
     dispatch_queue_t queue = dispatch_queue_create("ncnnBlazeface", NULL);
     [self.videoOutput setSampleBufferDelegate:self queue:queue];
@@ -108,7 +105,7 @@
         CGContextRelease(newContext);
         CGColorSpaceRelease(colorSpace);
         // 需要的图片帧数据
-        UIImage *image = [UIImage imageWithCGImage:newImage scale:1 orientation:UIImageOrientationUp];
+        UIImage *image = [UIImage imageWithCGImage:newImage scale:1 orientation:UIImageOrientationRight];
         CGImageRelease(newImage);
         CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
         return image;

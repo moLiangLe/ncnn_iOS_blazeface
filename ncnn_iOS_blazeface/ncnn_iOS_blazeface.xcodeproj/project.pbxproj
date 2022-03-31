@@ -14,6 +14,9 @@
 		3A3080A027F5AA37002EF82C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A30809F27F5AA37002EF82C /* Assets.xcassets */; };
 		3A3080A327F5AA37002EF82C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A3080A127F5AA37002EF82C /* LaunchScreen.storyboard */; };
 		3A3080A627F5AA37002EF82C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3080A527F5AA37002EF82C /* main.m */; };
+		3A71444027F5BA1500503206 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71443F27F5BA1500503206 /* opencv2.framework */; };
+		3A71444427F5BA1F00503206 /* openmp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71444227F5BA1C00503206 /* openmp.framework */; };
+		3A71444527F5BA1F00503206 /* ncnn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71444327F5BA1F00503206 /* ncnn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		3A3080A227F5AA37002EF82C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3A3080A427F5AA37002EF82C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A3080A527F5AA37002EF82C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A71443F27F5BA1500503206 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		3A71444227F5BA1C00503206 /* openmp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openmp.framework; sourceTree = "<group>"; };
+		3A71444327F5BA1F00503206 /* ncnn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ncnn.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A71444527F5BA1F00503206 /* ncnn.framework in Frameworks */,
+				3A71444027F5BA1500503206 /* opencv2.framework in Frameworks */,
+				3A71444427F5BA1F00503206 /* openmp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +54,7 @@
 		3A30808727F5AA34002EF82C = {
 			isa = PBXGroup;
 			children = (
+				3A71443E27F5B9FF00503206 /* Framework */,
 				3A30809227F5AA34002EF82C /* ncnn_iOS_blazeface */,
 				3A30809127F5AA34002EF82C /* Products */,
 			);
@@ -74,6 +84,16 @@
 				3A3080A527F5AA37002EF82C /* main.m */,
 			);
 			path = ncnn_iOS_blazeface;
+			sourceTree = "<group>";
+		};
+		3A71443E27F5B9FF00503206 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				3A71444327F5BA1F00503206 /* ncnn.framework */,
+				3A71444227F5BA1C00503206 /* openmp.framework */,
+				3A71443F27F5BA1500503206 /* opencv2.framework */,
+			);
+			path = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +313,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 442RV896AK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = ncnn_iOS_blazeface/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -311,6 +335,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 442RV896AK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = ncnn_iOS_blazeface/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

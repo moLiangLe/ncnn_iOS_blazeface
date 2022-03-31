@@ -51,7 +51,33 @@
 }
 
 - (void)configVideo {
+    self.captureSession = [[AVCaptureSession alloc] init];
+    self.captureSession.sessionPreset = AVCaptureSessionPreset640x480;
     
+    self.captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    [self.captureSession beginConfiguration];
+    
+    NSError *error;
+    self.captureInput = [AVCaptureDeviceInput deviceInputWithDevice:self.captureDevice error:&error];
+    [self.captureSession addInput:self.captureInput];
+    
+    self.imageOutput = [[AVCaptureStillImageOutput alloc] init];
+    // 这是输出流的设置参数AVVideoCodecJPEG参数表示以JPEG的图片格式输出图片
+    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    [self.imageOutput setOutputSettings:outputSettings];
+    [self.captureSession addOutput:self.imageOutput];
+    
+    self.videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+    self.videoOutput.alwaysDiscardsLateVideoFrames = YES;
+    self.videoOutput.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+    [self.captureSession addOutput:_videoOutput];
+
+    dispatch_queue_t queue = dispatch_queue_create("ncnnBlazeface", NULL);
+    [self.videoOutput setSampleBufferDelegate:self queue:queue];
+    [self.captureSession commitConfiguration];
+    
+    [self.captureSession startRunning];
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
